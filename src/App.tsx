@@ -7,7 +7,7 @@ import Text from "./components/display/Text";
 function App() {
   const [journal, setJournal] = useState<string[]>([]);
 
-  const timestamp = new Date().toISOString();
+  const timestamp = new Date().toLocaleString();
   const { post } = usePost(`/api/journal`);
 
   const handleSubmit = (text: string) => {
@@ -16,13 +16,23 @@ function App() {
   };
 
   const item = localStorage.getItem("/api/journal");
+  const parsedItem = item ? JSON.parse(item) : {};
   return (
     <Container>
       <div className="py-1">
         <Text h={1}>Journify</Text>
       </div>
 
-      <div>{item ? item : <Text>No entries yet.</Text>}</div>
+      <div>
+        {parsedItem ? (
+          <div>
+            <Text>{parsedItem.text || "N/A"}</Text>
+            <Text size="sm">{parsedItem.timestamp}</Text>
+          </div>
+        ) : (
+          <Text>No entries yet.</Text>
+        )}
+      </div>
       <Divider />
       <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-2 border-t">
         <Textarea
