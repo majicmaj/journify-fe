@@ -1,10 +1,8 @@
-interface IUsePost {
-  url: string;
-  body: unknown;
-}
+const usePost = (url: string) => {
+  const post = (body: unknown) =>
+    window.localStorage.setItem(url, JSON.stringify(body));
 
-const usePost = ({ url, body }: IUsePost) => {
-  window.localStorage.setItem(url, JSON.stringify(body));
+  return { post };
 };
 
 export default usePost;
