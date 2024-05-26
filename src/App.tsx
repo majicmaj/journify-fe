@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="max-h-screen h-screen">
-      <div className="p-2 h-full bg-red-200">
+      <div className="p-2 h-full">
         <Text h={1}>Journify</Text>
         {isJournals && (
           <div className="h-full flex flex-col gap-2">
@@ -56,3 +56,5 @@ function App() {
     </div>
   );
 }
+
+export default App;
