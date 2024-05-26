@@ -23,9 +23,12 @@ function App() {
   };
 
   return (
-    <div className="max-h-screen h-screen">
+    <div className="max-h-screen h-screen bg-stone-100">
       <div className="p-2 h-full">
-        <Text h={1}>Journify</Text>
+        <div className="pt-4 pb-8">
+          <Text h={1}>Journify</Text>
+        </div>
+
         {isJournals && (
           <div className="h-full flex flex-col gap-2">
             {journals?.map((journal: IJournal) => (
@@ -34,11 +37,7 @@ function App() {
           </div>
         )}
 
-        {!isJournals && (
-          <div className="h-full grid place-items-center">
-            <Text>No journals yet</Text>
-          </div>
-        )}
+        {!isJournals && <Text>No journals yet</Text>}
       </div>
 
       <div className="sticky bg-white bottom-0 left-0 right-0 p-4 flex items-center gap-2 border-t">
