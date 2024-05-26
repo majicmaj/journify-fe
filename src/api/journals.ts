@@ -3,8 +3,10 @@ export interface IJournal {
   text: string;
 }
 
+export const JOURNAL_KEY = "journals";
+
 export const getJournals = () => {
-  const journals = window.localStorage.getItem("journals");
+  const journals = window.localStorage.getItem(JOURNAL_KEY);
   return journals ? JSON.parse(journals) : [];
 };
 
@@ -16,7 +18,7 @@ export const getJournal = (timestamp: string) => {
 export const postJournal = (journal: IJournal) => {
   const journals = getJournals();
   journals.push(journal);
-  window.localStorage.setItem("journals", JSON.stringify(journals));
+  window.localStorage.setItem(JOURNAL_KEY, JSON.stringify(journals));
 };
 
 export const putJournal = (journal: IJournal) => {
@@ -25,7 +27,7 @@ export const putJournal = (journal: IJournal) => {
     (j: IJournal) => j.timestamp === journal.timestamp
   );
   journals[index] = journal;
-  window.localStorage.setItem("journals", JSON.stringify(journals));
+  window.localStorage.setItem(JOURNAL_KEY, JSON.stringify(journals));
 };
 
 export const deleteJournal = (timestamp: string) => {
@@ -34,5 +36,5 @@ export const deleteJournal = (timestamp: string) => {
     (journal: IJournal) => journal.timestamp === timestamp
   );
   journals.splice(index, 1);
-  window.localStorage.setItem("journals", JSON.stringify(journals));
+  window.localStorage.setItem(JOURNAL_KEY, JSON.stringify(journals));
 };
