@@ -1,4 +1,5 @@
-import { Card, Textarea } from "@mui/joy";
+import { SaveRounded } from "@mui/icons-material";
+import { Card, IconButton, Textarea } from "@mui/joy";
 import { useState } from "react";
 import useDeleteJournal from "../../api/journal/useDeleteJournal";
 import usePutJournal from "../../api/journal/usePutJournal";
@@ -60,11 +61,14 @@ const Journal = ({ journal }: { journal: IJournal }) => {
           </div>
 
           <div>
+            {isEditing && (
+              <IconButton onClick={handlePut}>
+                <SaveRounded />
+              </IconButton>
+            )}
             <JournalMenu
-              handleDelete={handleDelete}
               handleEdit={handleEdit}
               handleCloseMenu={handleCloseMenu}
-              handlePut={handlePut}
               handleRemove={handleRemove}
             />
           </div>
