@@ -1,29 +1,73 @@
-// React MUI JOY imports
-import { ClearRounded } from "@mui/icons-material";
-import { Card, IconButton } from "@mui/joy";
-
-// A delete journal hook,
+import { Card, Textarea } from "@mui/joy";
+import { useState } from "react";
 import useDeleteJournal from "../../api/journal/useDeleteJournal";
+import usePutJournal from "../../api/journal/usePutJournal";
 import { IJournal } from "../../api/journals";
-
-// Our standard Text component
 import Text from "../display/Text";
+import JournalMenu from "./JournalMenu";
 
 const Journal = ({ journal }: { journal: IJournal }) => {
-  const { mutate } = useDeleteJournal();
+  const { mutate: remove } = useDeleteJournal();
+  const { mutate: update } = usePutJournal();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [editedText, setEditedText] = useState(journal.text);
 
   const handleDelete = () => {
-    mutate(journal.timestamp);
+    setIsDeleting(!isDeleting);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handlePut = () => {
+    const newJournal = {
+      text: editedText,
+      timestamp: journal.timestamp,
+    };
+    update(newJournal);
+    setIsEditing(false);
+  };
+
+  const handleRemove = () => {
+    remove(journal.timestamp);
+    setIsDeleting(false);
+  };
+
+  const handleCloseMenu = () => {
+    setIsOpen(false);
+    setIsDeleting(false);
+    setIsEditing(false);
   };
 
   return (
     <Card>
       <div key={journal.timestamp} className="flex flex-col gap-2">
         <div className="flex justify-between">
-          <Text>{journal.text}</Text>
-          <IconButton onClick={handleDelete}>
-            <ClearRounded />
-          </IconButton>
+          <div className="flex justify-between flex-grow">
+            {!isEditing && <Text>{journal.text}</Text>}
+            {isEditing && (
+              <Textarea
+                maxRows={6}
+                onChange={(e) => setEditedText(e.target.value)}
+                value={editedText}
+                sx={{ flexGrow: 1 }}
+              />
+            )}
+          </div>
+
+          <div>
+            <JournalMenu
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+              handleCloseMenu={handleCloseMenu}
+              handlePut={handlePut}
+              handleRemove={handleRemove}
+            />
+          </div>
         </div>
         <Text size="sm">{journal.timestamp}</Text>
       </div>
