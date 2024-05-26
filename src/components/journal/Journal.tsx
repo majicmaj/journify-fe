@@ -1,5 +1,5 @@
 import { SaveRounded } from "@mui/icons-material";
-import { Card, IconButton, Textarea } from "@mui/joy";
+import { Card, Divider, IconButton, Textarea } from "@mui/joy";
 import { useState } from "react";
 import useDeleteJournal from "../../api/journal/useDeleteJournal";
 import usePutJournal from "../../api/journal/usePutJournal";
@@ -11,14 +11,8 @@ const Journal = ({ journal }: { journal: IJournal }) => {
   const { mutate: remove } = useDeleteJournal();
   const { mutate: update } = usePutJournal();
 
-  const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [editedText, setEditedText] = useState(journal.text);
-
-  const handleDelete = () => {
-    setIsDeleting(!isDeleting);
-  };
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -35,21 +29,19 @@ const Journal = ({ journal }: { journal: IJournal }) => {
 
   const handleRemove = () => {
     remove(journal.timestamp);
-    setIsDeleting(false);
-  };
-
-  const handleCloseMenu = () => {
-    setIsOpen(false);
-    setIsDeleting(false);
-    setIsEditing(false);
   };
 
   return (
     <Card>
       <div key={journal.timestamp} className="flex flex-col gap-2">
         <div className="flex justify-between">
-          <div className="flex justify-between flex-grow">
-            {!isEditing && <Text>{journal.text}</Text>}
+          <div className="flex flex-col justify-between flex-grow">
+            {!isEditing &&
+              journal.text.split("\n").map((text, index) => (
+                <Text key={index} size="md" sx={{ wordBreak: "break-word" }}>
+                  {text}
+                </Text>
+              ))}
             {isEditing && (
               <Textarea
                 maxRows={6}
@@ -59,21 +51,19 @@ const Journal = ({ journal }: { journal: IJournal }) => {
               />
             )}
           </div>
-
-          <div>
-            {isEditing && (
-              <IconButton onClick={handlePut}>
-                <SaveRounded />
-              </IconButton>
-            )}
-            <JournalMenu
-              handleEdit={handleEdit}
-              handleCloseMenu={handleCloseMenu}
-              handleRemove={handleRemove}
-            />
-          </div>
         </div>
+      </div>
+      <Divider />
+      <div className="flex justify-between items-center">
         <Text size="sm">{journal.timestamp}</Text>
+        <div className="flex gap-2 items-center">
+          {isEditing && (
+            <IconButton onClick={handlePut}>
+              <SaveRounded />
+            </IconButton>
+          )}
+          <JournalMenu handleEdit={handleEdit} handleRemove={handleRemove} />
+        </div>
       </div>
     </Card>
   );
