@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IJournal, postJournal } from "../journals";
 
-const useDeleteJournal = () => {
+const usePostJournal = () => {
   const queryClient = useQueryClient();
 
   const handlePost = async (journal: IJournal) => {
@@ -21,4 +21,4 @@ const useDeleteJournal = () => {
   return mutation;
 };
 
-export default useDeleteJournal;
+export default usePostJournal;
