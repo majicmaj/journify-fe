@@ -1,5 +1,8 @@
+import { Block } from "@blocknote/core";
+import { BlockNoteView } from "@blocknote/mantine";
+import { useCreateBlockNote } from "@blocknote/react";
 import { ArrowBackIosRounded, SaveAsRounded } from "@mui/icons-material";
-import { IconButton, Input, Textarea } from "@mui/joy";
+import { Card, IconButton } from "@mui/joy";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import usePostJournal from "../../api/journal/usePostJournal";
@@ -7,8 +10,7 @@ import Text from "../../components/display/Text";
 import useKeyboardSave from "../../hooks/useKeyboardSave";
 
 function New() {
-  const [journal, setJournal] = useState<string[]>([]);
-  const [title, setTitle] = useState<string>("");
+  const [journal, setJournal] = useState<Block[]>([]);
 
   const getTimestamp = () => new Date().toLocaleString();
 
@@ -16,17 +18,17 @@ function New() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    const text = journal.join("\n");
+    const text = JSON.stringify(editor.document);
+
     if (!text.trim()) return;
 
-    post({ text, title, timestamp: getTimestamp() });
+    post({ text, timestamp: getTimestamp() });
     navigate("/");
   };
 
-  const lines = journal.length;
-  const word = journal.join(" ").split(" ").length;
+  useKeyboardSave(() => handleSubmit(), [journal]);
 
-  useKeyboardSave(() => handleSubmit(), [journal, title]);
+  const editor = useCreateBlockNote();
 
   return (
     <div className="max-h-screen h-screen bg-stone-100 justify-between flex flex-col gap-2 p-2">
@@ -47,28 +49,15 @@ function New() {
           <SaveAsRounded />
         </IconButton>
       </div>
-      {/* <div className="sticky bottom-0 left-0 right-0 p-2 flex items-center border gap-2"> */}
-      <Input
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-        variant="outlined"
-        placeholder="Title"
-        size="lg"
-      />
-      <Textarea
-        placeholder="Type something..."
-        variant="outlined"
-        minRows={3}
-        onChange={(e) => setJournal(e.target.value.split("\n"))}
-        value={journal.join("\n")}
-        sx={{ flexGrow: 1 }}
-        autoFocus
-      />
-      <div className="flex justify-end">
-        <Text>
-          {lines} line{lines > 1 && "s"}, {word} word{word > 1 && "s"}
-        </Text>
-      </div>
+      <Card sx={{ height: "100%", p: 1, px: 0 }}>
+        <div className="h-full bg-white">
+          <BlockNoteView
+            editor={editor}
+            theme="light"
+            onChange={() => setJournal(editor.document)}
+          />
+        </div>
+      </Card>
     </div>
   );
 }
