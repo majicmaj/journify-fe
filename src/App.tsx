@@ -1,75 +1,46 @@
-import { SendRounded } from "@mui/icons-material";
-import { IconButton, Textarea } from "@mui/joy";
+import { Input } from "@mui/joy";
 import { useState } from "react";
-import useGetJournals from "./api/journal/useGetJournals";
-import usePostJournal from "./api/journal/usePostJournal";
-import { IJournal } from "./api/journals";
-import Text from "./components/display/Text";
-import Journal from "./components/journal/Journal";
+import useGetJournals from "./folders/api/journal/useGetJournals";
+import { IJournal } from "./folders/api/journals";
+import Text from "./folders/components/display/Text";
+import Journal from "./folders/components/journal/Journal";
+import NewEntryButton from "./folders/components/journal/NewEntryButton";
 
 function App() {
-  const [journal, setJournal] = useState<string[]>([]);
   const [searchedJournal, setSearchedJournal] = useState<string>("");
 
-  const timestamp = new Date().toLocaleString();
-
   const { data: journals } = useGetJournals();
-  const { mutate: post } = usePostJournal();
 
   const isJournals = journals?.length > 0;
 
-  const handleSubmit = (text: string) => {
-    post({ text, timestamp });
-    setJournal([]);
-  };
-
-  const searchJournal = journals?.filter((journal) => 
+  const filteredJournals = journals?.filter((journal: IJournal) =>
     journal.text.toLowerCase().includes(searchedJournal.toLowerCase())
   );
-  
 
-
-
-return (
-    
+  return (
     <div className="max-h-screen h-screen bg-stone-100">
       <div className="p-2 h-full">
         <div className="pt-4 pb-8">
           <Text h={1}>Journify</Text>
-          </div>
-          
-        <div>
-        <Textarea 
-        placeholder="Search"
-        maxRows={6}
-        onChange={(e) => setSearchedJournal(e.target.value)}
-        value={searchedJournal}
-        sx={{ flexGrow: 1 }}>
-        </Textarea>
         </div>
-        
+
+        <Input
+          placeholder="Search"
+          onChange={(e) => setSearchedJournal(e.target.value)}
+          value={searchedJournal}
+        />
+
         {isJournals && (
           <div className="h-full flex flex-col gap-2">
-            {searchJournal?.map((journal: IJournal) => (
+            {filteredJournals?.map((journal: IJournal) => (
               <Journal journal={journal} key={journal.timestamp} />
             ))}
           </div>
         )}
-
-        {!isJournals && <Text>No journals yet</Text>}
       </div>
 
-      <div className="sticky bg-white bottom-0 left-0 right-0 p-4 flex items-center gap-2 border-t">
-        <Textarea
-          placeholder="Write a Journal..."
-          maxRows={6}
-          onChange={(e) => setJournal(e.target.value.split("\n"))}
-          value={journal.join("\n")}
-          sx={{ flexGrow: 1 }}
-        />
-        <IconButton size="lg" onClick={() => handleSubmit(journal.join("\n"))}>
-          <SendRounded />
-        </IconButton>
+      <div className="sticky bottom-0 left-0 right-0 p-4 flex justify-center">
+        <NewEntryButton fullButton={!isJournals} />
       </div>
     </div>
   );

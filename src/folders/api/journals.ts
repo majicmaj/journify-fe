@@ -1,6 +1,7 @@
 export interface IJournal {
   timestamp: string;
   text: string;
+  title: string;
 }
 
 export const JOURNAL_KEY = "journals";
