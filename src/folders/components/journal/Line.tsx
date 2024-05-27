@@ -18,7 +18,14 @@ const Line = ({ text }: { text: string }) => {
   const elements = words.map((word, index) => {
     if (word.startsWith("#")) {
       return (
-        <Chip key={index} color="primary" className="mr-1">
+        <Chip
+          key={index}
+          color="primary"
+          sx={{
+            mr: 1,
+            mt: -0.5,
+          }}
+        >
           {word}
         </Chip>
       );
