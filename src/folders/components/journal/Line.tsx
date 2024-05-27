@@ -1,5 +1,23 @@
-import { Chip } from "@mui/joy";
+import { Chip, Typography } from "@mui/joy";
 import Text from "../display/Text";
+
+const Hashtag = ({ word }: { word: string }) => (
+  <Chip
+    color="primary"
+    sx={{
+      mr: 0.5,
+      mt: -0.5,
+    }}
+  >
+    {word}
+  </Chip>
+);
+
+const CodeBlock = ({ word }: { word: string }) => (
+  <Typography variant="outlined" sx={{ display: "inline", mr: 0.5 }}>
+    <code>{word.replace(/^`|`$/g, "")}</code>
+  </Typography>
+);
 
 const Line = ({ text }: { text: string }) => {
   const isLineEmpty = text.trim() === "";
@@ -8,30 +26,12 @@ const Line = ({ text }: { text: string }) => {
     return <br />;
   }
 
-  const isLineIncludeHash = text.includes("#");
-
-  if (!isLineIncludeHash) {
-    return <Text>{text}</Text>;
-  }
-
   const words = text.split(" ");
   const elements = words.map((word, index) => {
-    if (word.startsWith("#")) {
-      return (
-        <Chip
-          key={index}
-          color="primary"
-          sx={{
-            mr: 1,
-            mt: -0.5,
-          }}
-        >
-          {word}
-        </Chip>
-      );
-    }
+    if (word.startsWith("#")) return <Hashtag key={index} word={word} />;
+    if (word.startsWith("`")) return <CodeBlock key={index} word={word} />;
 
-    return <span key={index}>{word + " "}</span>;
+    return <>{word + " "}</>;
   });
 
   return <Text>{elements}</Text>;
