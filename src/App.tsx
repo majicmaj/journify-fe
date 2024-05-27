@@ -5,6 +5,7 @@ import { IJournal } from "./folders/api/journals";
 import Text from "./folders/components/display/Text";
 import Journal from "./folders/components/journal/Journal";
 import NewEntryButton from "./folders/components/journal/NewEntryButton";
+import NoJournals from "./folders/components/journal/NoJournals";
 
 function App() {
   const [searchedJournal, setSearchedJournal] = useState<string>("");
@@ -24,16 +25,20 @@ function App() {
           <Text h={1}>Journify</Text>
         </div>
 
-        <Input
-          placeholder="Search"
-          onChange={(e) => setSearchedJournal(e.target.value)}
-          value={searchedJournal}
-        />
+        {isJournals && (
+          <Input
+            placeholder="Search"
+            onChange={(e) => setSearchedJournal(e.target.value)}
+            value={searchedJournal}
+          />
+        )}
 
         {isJournals &&
           filteredJournals?.map((journal: IJournal) => (
             <Journal journal={journal} key={journal.timestamp} />
           ))}
+
+        {!isJournals && <NoJournals />}
       </div>
 
       <Box className="fixed bottom-0 p-2 ">
