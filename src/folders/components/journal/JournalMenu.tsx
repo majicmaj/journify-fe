@@ -1,18 +1,13 @@
 import { Dropdown, IconButton, Menu, MenuButton, MenuItem } from "@mui/joy";
 
-import {
-  DeleteRounded,
-  EditRounded,
-  MoreHorizRounded,
-} from "@mui/icons-material";
+import { DeleteRounded, MoreHorizRounded } from "@mui/icons-material";
 import { useState } from "react";
 
 interface IJournalMenu {
-  handleEdit: () => void;
   handleRemove: () => void;
 }
 
-const JournalMenu = ({ handleEdit, handleRemove }: IJournalMenu) => {
+const JournalMenu = ({ handleRemove }: IJournalMenu) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -21,11 +16,7 @@ const JournalMenu = ({ handleEdit, handleRemove }: IJournalMenu) => {
         <MoreHorizRounded />
       </MenuButton>
       <Menu>
-        <MenuItem onClick={handleEdit}>
-          <EditRounded />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleRemove}>
+        <MenuItem onClick={handleRemove} color="danger">
           <DeleteRounded />
           Delete
         </MenuItem>

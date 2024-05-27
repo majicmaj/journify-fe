@@ -41,7 +41,7 @@ function App() {
         {!isJournals && <NoJournals />}
       </div>
 
-      <Box className="fixed bottom-0 p-2 ">
+      <Box className="fixed bottom-0 p-2 pb-8">
         <NewEntryButton fullButton={!isJournals} />
       </Box>
     </div>

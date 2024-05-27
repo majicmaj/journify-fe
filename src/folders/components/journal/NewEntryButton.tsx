@@ -1,4 +1,4 @@
-import { BorderColorRounded } from "@mui/icons-material";
+import { AddRounded, BorderColorRounded } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/joy";
 import { Link } from "react-router-dom";
 
@@ -26,10 +26,10 @@ const NewEntryButton = ({ fullButton }: INewEntryButton) => {
         <IconButton
           size="lg"
           color="primary"
-          variant="soft"
+          variant="solid"
           sx={{ borderRadius: "100%" }}
         >
-          <BorderColorRounded />
+          <AddRounded />
         </IconButton>
       )}
     </Link>
