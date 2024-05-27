@@ -3,7 +3,7 @@
   "name": "Journify",
   "icons": [
     {
-      "src": "/logo.svg",
+      "src": "/maskable.png",
       "sizes": "any"
     },
     {
