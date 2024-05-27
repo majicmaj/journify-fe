@@ -15,6 +15,9 @@ const NewEntryButton = ({ fullButton }: INewEntryButton) => {
           fullWidth
           size="lg"
           variant="soft"
+          sx={{
+            width: "calc(100vw - 1rem)",
+          }}
         >
           New Entry
         </Button>

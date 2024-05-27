@@ -1,4 +1,4 @@
-import { Input } from "@mui/joy";
+import { Box, Input } from "@mui/joy";
 import { useState } from "react";
 import useGetJournals from "./folders/api/journal/useGetJournals";
 import { IJournal } from "./folders/api/journals";
@@ -18,8 +18,8 @@ function App() {
   );
 
   return (
-    <div className="max-h-screen h-screen bg-stone-100">
-      <div className="p-2 h-full flex flex-col gap-2">
+    <div className="relative max-h-screen h-screen bg-stone-100 overflow-hidden items-center flex flex-col">
+      <div className="p-2 flex flex-col gap-2 h-full overflow-y-scroll">
         <div className="pt-4 pb-8">
           <Text h={1}>Journify</Text>
         </div>
@@ -36,9 +36,9 @@ function App() {
           ))}
       </div>
 
-      <div className="sticky bottom-0 left-0 right-0 p-4 flex justify-center">
+      <Box className="fixed bottom-0 p-2 ">
         <NewEntryButton fullButton={!isJournals} />
-      </div>
+      </Box>
     </div>
   );
 }
