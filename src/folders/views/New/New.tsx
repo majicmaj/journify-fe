@@ -1,6 +1,6 @@
 import { ArrowBackIosRounded, SaveAsRounded } from "@mui/icons-material";
 import { IconButton, Input, Textarea } from "@mui/joy";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import usePostJournal from "../../api/journal/usePostJournal";
 import Text from "../../components/display/Text";
@@ -15,12 +15,32 @@ function New() {
   const navigate = useNavigate();
 
   const handleSubmit = (text: string) => {
+    if (!text.trim()) return;
+
     post({ text, title, timestamp: getTimestamp() });
     navigate("/");
   };
 
   const lines = journal.length;
   const word = journal.join(" ").split(" ").length;
+
+  // Saves the journal with ctrl/cmd + s
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        handleSubmit(journal.join("\n"));
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [journal]);
 
   return (
     <div className="max-h-screen h-screen bg-stone-100 justify-between flex flex-col gap-2 p-2">

@@ -1,6 +1,6 @@
 import { SaveRounded } from "@mui/icons-material";
 import { Box, Card, Divider, IconButton } from "@mui/joy";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDeleteJournal from "../../api/journal/useDeleteJournal";
 import usePutJournal from "../../api/journal/usePutJournal";
 import { IJournal } from "../../api/journals";
@@ -34,6 +34,24 @@ const Journal = ({ journal }: { journal: IJournal }) => {
   const handleRemove = () => {
     remove(journal.timestamp);
   };
+
+  // Saves the journal with ctrl/cmd + s
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        handlePut();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editedText]);
 
   return (
     <Card>
