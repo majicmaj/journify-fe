@@ -1,6 +1,6 @@
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
-import { SaveRounded } from "@mui/icons-material";
+import { EditRounded, SaveRounded } from "@mui/icons-material";
 import { Box, Card, Divider, IconButton } from "@mui/joy";
 import { useState } from "react";
 import useDeleteJournal from "../../api/journal/useDeleteJournal";
@@ -42,22 +42,15 @@ const Journal = ({ journal }: { journal: IJournal }) => {
   });
 
   return (
-    <Card sx={{ background: "white" }}>
+    <Card
+      sx={{ background: "white" }}
+      color={isEditing ? "primary" : "neutral"}
+    >
       <div
         key={journal.timestamp}
         className="flex flex-col gap-2 overflow-hidden"
       >
-        {/* <JournalText
-            isEditing={isEditing}
-            journal={journal}
-            editedText={editedText}
-            setEditedText={setEditedText}
-          /> */}
-        <Box
-          sx={{
-            ml: isEditing ? 0 : -6,
-          }}
-        >
+        <Box>
           <BlockNoteView
             editor={editor}
             onChange={() => {
@@ -80,7 +73,12 @@ const Journal = ({ journal }: { journal: IJournal }) => {
               <SaveRounded />
             </IconButton>
           )}
-          <JournalMenu handleEdit={handleEdit} handleRemove={handleRemove} />
+          {!isEditing && (
+            <IconButton onClick={handleEdit}>
+              <EditRounded />
+            </IconButton>
+          )}
+          <JournalMenu handleRemove={handleRemove} />
         </Box>
       </Box>
     </Card>
