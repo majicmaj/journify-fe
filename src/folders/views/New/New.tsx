@@ -19,6 +19,9 @@ function New() {
     navigate("/");
   };
 
+  const lines = journal.length;
+  const word = journal.join(" ").split(" ").length;
+
   return (
     <div className="max-h-screen h-screen bg-stone-100 justify-between flex flex-col gap-2 p-2">
       <div className="p-2 flex items-center justify-between">
@@ -55,7 +58,11 @@ function New() {
         sx={{ flexGrow: 1 }}
         autoFocus
       />
-      {/* </div> */}
+      <div className="flex justify-end">
+        <Text>
+          {lines} line{lines > 1 && "s"}, {word} word{word > 1 && "s"}
+        </Text>
+      </div>
     </div>
   );
 }

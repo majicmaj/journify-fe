@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className="max-h-screen h-screen bg-stone-100">
-      <div className="p-2 h-full">
+      <div className="p-2 h-full flex flex-col gap-2">
         <div className="pt-4 pb-8">
           <Text h={1}>Journify</Text>
         </div>
@@ -30,13 +30,10 @@ function App() {
           value={searchedJournal}
         />
 
-        {isJournals && (
-          <div className="h-full flex flex-col gap-2">
-            {filteredJournals?.map((journal: IJournal) => (
-              <Journal journal={journal} key={journal.timestamp} />
-            ))}
-          </div>
-        )}
+        {isJournals &&
+          filteredJournals?.map((journal: IJournal) => (
+            <Journal journal={journal} key={journal.timestamp} />
+          ))}
       </div>
 
       <div className="sticky bottom-0 left-0 right-0 p-4 flex justify-center">
