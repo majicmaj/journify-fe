@@ -4,6 +4,7 @@ import { useState } from "react";
 import useDeleteJournal from "../../api/journal/useDeleteJournal";
 import usePutJournal from "../../api/journal/usePutJournal";
 import { IJournal } from "../../api/journals";
+import useKeyboardSave from "../../hooks/useKeyboardSave";
 import Text from "../display/Text";
 import JournalMenu from "./JournalMenu";
 import JournalText from "./JournalText";
@@ -34,6 +35,8 @@ const Journal = ({ journal }: { journal: IJournal }) => {
   const handleRemove = () => {
     remove(journal.timestamp);
   };
+
+  useKeyboardSave(handlePut, [editedText]);
 
   return (
     <Card>

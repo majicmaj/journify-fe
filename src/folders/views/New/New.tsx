@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import usePostJournal from "../../api/journal/usePostJournal";
 import Text from "../../components/display/Text";
+import useKeyboardSave from "../../hooks/useKeyboardSave";
 
 function New() {
   const [journal, setJournal] = useState<string[]>([]);
@@ -14,13 +15,18 @@ function New() {
   const { mutate: post } = usePostJournal();
   const navigate = useNavigate();
 
-  const handleSubmit = (text: string) => {
+  const handleSubmit = () => {
+    const text = journal.join("\n");
+    if (!text.trim()) return;
+
     post({ text, title, timestamp: getTimestamp() });
     navigate("/");
   };
 
   const lines = journal.length;
   const word = journal.join(" ").split(" ").length;
+
+  useKeyboardSave(() => handleSubmit(), [journal, title]);
 
   return (
     <div className="max-h-screen h-screen bg-stone-100 justify-between flex flex-col gap-2 p-2">
@@ -37,7 +43,7 @@ function New() {
             day: "2-digit",
           })}
         </Text>
-        <IconButton size="lg" onClick={() => handleSubmit(journal.join("\n"))}>
+        <IconButton size="lg" onClick={handleSubmit}>
           <SaveAsRounded />
         </IconButton>
       </div>
