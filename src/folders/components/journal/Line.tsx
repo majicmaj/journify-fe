@@ -2,6 +2,12 @@ import { Chip } from "@mui/joy";
 import Text from "../display/Text";
 
 const Line = ({ text }: { text: string }) => {
+  const isLineEmpty = text.trim() === "";
+
+  if (isLineEmpty) {
+    return <br />;
+  }
+
   const isLineIncludeHash = text.includes("#");
 
   if (!isLineIncludeHash) {
