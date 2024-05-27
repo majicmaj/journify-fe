@@ -1,6 +1,6 @@
 import { Textarea } from "@mui/joy";
 import { IJournal } from "../../api/journals";
-import Text from "../display/Text";
+import Line from "./Line";
 
 interface IJournalText {
   isEditing: boolean;
@@ -25,11 +25,9 @@ const JournalText = ({
           sx={{ flexGrow: 1 }}
         />
       ) : (
-        journal.text.split("\n").map((text, index) => (
-          <Text key={index} size="md" sx={{ wordBreak: "break-word" }}>
-            {text}
-          </Text>
-        ))
+        journal.text
+          .split("\n")
+          .map((text, index) => <Line key={index} text={text} />)
       )}
     </div>
   );
