@@ -1,9 +1,10 @@
 import { ArrowBackIosRounded, SaveAsRounded } from "@mui/icons-material";
 import { IconButton, Input, Textarea } from "@mui/joy";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import usePostJournal from "../../api/journal/usePostJournal";
 import Text from "../../components/display/Text";
+import useKeyboardSave from "../../hooks/useKeyboardSave";
 
 function New() {
   const [journal, setJournal] = useState<string[]>([]);
@@ -14,7 +15,8 @@ function New() {
   const { mutate: post } = usePostJournal();
   const navigate = useNavigate();
 
-  const handleSubmit = (text: string) => {
+  const handleSubmit = () => {
+    const text = journal.join("\n");
     if (!text.trim()) return;
 
     post({ text, title, timestamp: getTimestamp() });
@@ -24,23 +26,7 @@ function New() {
   const lines = journal.length;
   const word = journal.join(" ").split(" ").length;
 
-  // Saves the journal with ctrl/cmd + s
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
-        e.preventDefault();
-        handleSubmit(journal.join("\n"));
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [journal]);
+  useKeyboardSave(() => handleSubmit(), [journal, title]);
 
   return (
     <div className="max-h-screen h-screen bg-stone-100 justify-between flex flex-col gap-2 p-2">
@@ -57,7 +43,7 @@ function New() {
             day: "2-digit",
           })}
         </Text>
-        <IconButton size="lg" onClick={() => handleSubmit(journal.join("\n"))}>
+        <IconButton size="lg" onClick={handleSubmit}>
           <SaveAsRounded />
         </IconButton>
       </div>
