@@ -21,8 +21,13 @@ function App() {
   return (
     <div className="relative max-h-screen h-screen bg-stone-100 overflow-hidden items-center flex flex-col">
       <div className="p-2 flex flex-col gap-2 h-full overflow-y-scroll w-full">
-        <div className="pt-4 pb-8">
-          <Text h={1}>Journify</Text>
+        <div className="pt-4 pb-8 flex items-center gap-1">
+          <img
+            src="/journify_256.png"
+            alt="Journify Logo"
+            className="h-[32px] inline"
+          />
+          <Text h={3}>Journify</Text>
         </div>
 
         {isJournals && (

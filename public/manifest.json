@@ -1,0 +1,25 @@
+{
+  "short_name": "Journify",
+  "name": "Journify",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any"
+    },
+    {
+      "src": "/maskable.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/maskable.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#f5f5f4",
+  "background_color": "#f5f5f4"
+}

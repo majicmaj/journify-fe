@@ -43,20 +43,25 @@ const Journal = ({ journal }: { journal: IJournal }) => {
 
   return (
     <Card
-      sx={{ background: "white" }}
+      sx={{ background: "white", p: 1 }}
       color={isEditing ? "primary" : "neutral"}
     >
       <div
         key={journal.timestamp}
         className="flex flex-col gap-2 overflow-hidden"
       >
-        <Box>
+        <Box
+          sx={{
+            ml: isEditing ? -1 : -6,
+          }}
+        >
           <BlockNoteView
             editor={editor}
             onChange={() => {
               setEditedText(editor.document);
             }}
             editable={isEditing}
+            sideMenu={isEditing}
             theme="light"
           />
         </Box>
@@ -64,7 +69,7 @@ const Journal = ({ journal }: { journal: IJournal }) => {
       <Divider />
       <Box
         className="flex gap-2 justify-between items-center"
-        sx={{ m: -1, my: -1.5 }}
+        sx={{ my: -0.5 }}
       >
         <Text size="sm">{journal.timestamp}</Text>
         <Box className="flex gap-2 items-center">
