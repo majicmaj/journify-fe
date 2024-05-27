@@ -9,7 +9,7 @@ interface INewEntryButton {
 const NewEntryButton = ({ fullButton }: INewEntryButton) => {
   return (
     <Link to="/new">
-      {!fullButton && (
+      {fullButton && (
         <Button
           startDecorator={<BorderColorRounded />}
           fullWidth
@@ -19,7 +19,7 @@ const NewEntryButton = ({ fullButton }: INewEntryButton) => {
           New Entry
         </Button>
       )}
-      {fullButton && (
+      {!fullButton && (
         <IconButton
           size="lg"
           color="primary"
