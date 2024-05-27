@@ -1,3 +1,5 @@
+import { BlockNoteView } from "@blocknote/mantine";
+import { useCreateBlockNote } from "@blocknote/react";
 import { SaveRounded } from "@mui/icons-material";
 import { Box, Card, Divider, IconButton } from "@mui/joy";
 import { useState } from "react";
@@ -7,16 +9,13 @@ import { IJournal } from "../../api/journals";
 import useKeyboardSave from "../../hooks/useKeyboardSave";
 import Text from "../display/Text";
 import JournalMenu from "./JournalMenu";
-import JournalText from "./JournalText";
-import JournalTitle from "./JournalTitle";
 
 const Journal = ({ journal }: { journal: IJournal }) => {
   const { mutate: remove } = useDeleteJournal();
   const { mutate: update } = usePutJournal();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(journal.title);
-  const [editedText, setEditedText] = useState(journal.text);
+  const [editedText, setEditedText] = useState(JSON.parse(journal.text));
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -25,7 +24,7 @@ const Journal = ({ journal }: { journal: IJournal }) => {
   const handlePut = () => {
     const newJournal = {
       ...journal,
-      text: editedText,
+      text: JSON.stringify(editedText),
     };
 
     update(newJournal);
@@ -38,23 +37,36 @@ const Journal = ({ journal }: { journal: IJournal }) => {
 
   useKeyboardSave(handlePut, [editedText]);
 
+  const editor = useCreateBlockNote({
+    initialContent: JSON.parse(journal.text),
+  });
+
   return (
-    <Card>
-      <div key={journal.timestamp} className="flex flex-col gap-2">
-        <JournalTitle
-          isEditing={isEditing}
-          title={journal.title}
-          editedTitle={editedTitle}
-          setEditedTitle={setEditedTitle}
-        />
-        <div className="flex justify-between">
-          <JournalText
+    <Card sx={{ background: "white" }}>
+      <div
+        key={journal.timestamp}
+        className="flex flex-col gap-2 overflow-hidden"
+      >
+        {/* <JournalText
             isEditing={isEditing}
             journal={journal}
             editedText={editedText}
             setEditedText={setEditedText}
+          /> */}
+        <Box
+          sx={{
+            ml: isEditing ? 0 : -6,
+          }}
+        >
+          <BlockNoteView
+            editor={editor}
+            onChange={() => {
+              setEditedText(editor.document);
+            }}
+            editable={isEditing}
+            theme="light"
           />
-        </div>
+        </Box>
       </div>
       <Divider />
       <Box

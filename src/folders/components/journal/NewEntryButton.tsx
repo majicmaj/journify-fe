@@ -14,7 +14,7 @@ const NewEntryButton = ({ fullButton }: INewEntryButton) => {
           startDecorator={<BorderColorRounded />}
           fullWidth
           size="lg"
-          variant="soft"
+          variant="solid"
           sx={{
             width: "calc(100vw - 1rem)",
           }}
