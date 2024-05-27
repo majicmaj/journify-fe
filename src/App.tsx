@@ -9,6 +9,7 @@ import Journal from "./components/journal/Journal";
 
 function App() {
   const [journal, setJournal] = useState<string[]>([]);
+  const [searchedJournal, setSearchedJournal] = useState<string>("");
 
   const timestamp = new Date().toLocaleString();
 
@@ -22,16 +23,34 @@ function App() {
     setJournal([]);
   };
 
-  return (
+  const searchJournal = journals?.filter((journal) => 
+    journal.text.toLowerCase().includes(searchedJournal.toLowerCase())
+  );
+  
+
+
+
+return (
+    
     <div className="max-h-screen h-screen bg-stone-100">
       <div className="p-2 h-full">
         <div className="pt-4 pb-8">
           <Text h={1}>Journify</Text>
+          </div>
+          
+        <div>
+        <Textarea 
+        placeholder="Search"
+        maxRows={6}
+        onChange={(e) => setSearchedJournal(e.target.value)}
+        value={searchedJournal}
+        sx={{ flexGrow: 1 }}>
+        </Textarea>
         </div>
-
+        
         {isJournals && (
           <div className="h-full flex flex-col gap-2">
-            {journals?.map((journal: IJournal) => (
+            {searchJournal?.map((journal: IJournal) => (
               <Journal journal={journal} key={journal.timestamp} />
             ))}
           </div>
@@ -42,7 +61,7 @@ function App() {
 
       <div className="sticky bg-white bottom-0 left-0 right-0 p-4 flex items-center gap-2 border-t">
         <Textarea
-          placeholder="Type something..."
+          placeholder="Write a Journal..."
           maxRows={6}
           onChange={(e) => setJournal(e.target.value.split("\n"))}
           value={journal.join("\n")}
