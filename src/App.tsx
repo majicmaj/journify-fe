@@ -49,13 +49,16 @@ function App() {
           <Text h={3}>Journify</Text>
         </div>
 
+        {isJournals && (
         <ToggleButtonGroup 
         value={sortMode}
         onChange={(_,value) => value && setSortMode(value)}>
         <Button value="ascending">Sort By Ascending</Button> 
         <Button value="descending">Sort By Descending</Button> 
         </ToggleButtonGroup>
+        )}
         
+
         {isJournals && (
           <Input
             placeholder="Search"
