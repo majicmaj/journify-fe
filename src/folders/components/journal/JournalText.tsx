@@ -1,6 +1,5 @@
 import { Textarea } from "@mui/joy";
 import { IJournal } from "../../api/journals";
-import Line from "./Line";
 
 interface IJournalText {
   isEditing: boolean;
