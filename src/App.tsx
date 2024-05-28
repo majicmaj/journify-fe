@@ -1,5 +1,5 @@
-import { Box, Input, Button } from "@mui/joy";
-import ToggleButtonGroup from '@mui/joy/ToggleButtonGroup';
+import { SwapVertRounded } from "@mui/icons-material";
+import { Box, IconButton, Input } from "@mui/joy";
 import { useState } from "react";
 import useGetJournals from "./folders/api/journal/useGetJournals";
 import { IJournal } from "./folders/api/journals";
@@ -10,32 +10,37 @@ import NoJournals from "./folders/components/journal/NoJournals";
 
 function App() {
   const [searchedJournal, setSearchedJournal] = useState<string>("");
-  const [sortMode, setSortMode] = useState("ascending");
+  const [sortMode, setSortMode] = useState("descending");
 
   const { data: journals } = useGetJournals();
   const isJournals = journals?.length > 0;
 
+  const sortAscending = (journalA: IJournal, journalB: IJournal) => {
+    const aTime = Number(new Date(journalA.timestamp).getTime());
+    const bTime = Number(new Date(journalB.timestamp).getTime());
+    return aTime - bTime;
+  };
 
-  const sortAscending = (journalA : IJournal, journalB : IJournal) => {
-    const aTime = Number(new Date(journalA.timestamp).getTime())
-    const bTime = Number(new Date(journalB.timestamp).getTime())
-    return aTime - bTime 
-    }
+  const sortDescending = (journalA: IJournal, journalB: IJournal) => {
+    const aTime = Number(new Date(journalA.timestamp).getTime());
+    const bTime = Number(new Date(journalB.timestamp).getTime());
+    return bTime - aTime;
+  };
 
-  const sortDescending = (journalA : IJournal, journalB : IJournal) => {
-    const aTime = Number(new Date(journalA.timestamp).getTime())
-    const bTime = Number(new Date(journalB.timestamp).getTime())
-    return  bTime - aTime 
-  }
+  const sortFunction =
+    sortMode === "ascending" ? sortAscending : sortDescending;
 
-  const sortFunction = sortMode === "ascending" ? sortAscending: sortDescending
-
- 
-  const sortedJournals = journals?.length ? [...journals]?.sort(sortFunction): [] 
+  const sortedJournals = journals?.length
+    ? [...journals]?.sort(sortFunction)
+    : [];
 
   const filteredJournals = sortedJournals?.filter((journal: IJournal) =>
     journal.text.toLowerCase().includes(searchedJournal.toLowerCase())
-    );
+  );
+
+  const toggleSortMode = () => {
+    setSortMode(sortMode === "ascending" ? "descending" : "ascending");
+  };
 
   return (
     <div className="relative max-h-screen h-screen bg-stone-100 overflow-hidden items-center flex flex-col">
@@ -49,19 +54,22 @@ function App() {
           <Text h={3}>Journify</Text>
         </div>
 
-        <ToggleButtonGroup 
-        value={sortMode}
-        onChange={(_,value) => value && setSortMode(value)}>
-        <Button value="ascending">Sort By Ascending</Button> 
-        <Button value="descending">Sort By Descending</Button> 
-        </ToggleButtonGroup>
-        
         {isJournals && (
-          <Input
-            placeholder="Search"
-            onChange={(e) => setSearchedJournal(e.target.value)}
-            value={searchedJournal}
-          />
+          <div className="flex gap-2">
+            <Input
+              placeholder="Search"
+              onChange={(e) => setSearchedJournal(e.target.value)}
+              value={searchedJournal}
+              sx={{ flexGrow: 1 }}
+            />
+            <IconButton
+              onClick={toggleSortMode}
+              variant="outlined"
+              color={sortMode === "ascending" ? "primary" : "neutral"}
+            >
+              <SwapVertRounded />
+            </IconButton>
+          </div>
         )}
 
         {isJournals &&
