@@ -1,6 +1,5 @@
 import { SwapVertRounded } from "@mui/icons-material";
-import { Box, IconButton, Input, Button} from "@mui/joy";
-import ToggleButtonGroup from '@mui/joy/ToggleButtonGroup';
+import { Box, IconButton, Input } from "@mui/joy";
 import { useState } from "react";
 import useGetJournals from "./folders/api/journal/useGetJournals";
 import { IJournal } from "./folders/api/journals";
@@ -54,16 +53,6 @@ function App() {
           />
           <Text h={3}>Journify</Text>
         </div>
-
-        {isJournals && (
-        <ToggleButtonGroup 
-        value={sortMode}
-        onChange={(_,value) => value && setSortMode(value)}>
-        <Button value="ascending">Sort By Ascending</Button> 
-        <Button value="descending">Sort By Descending</Button> 
-        </ToggleButtonGroup>
-        )}
-        
 
         {isJournals && (
           <div className="flex gap-2">
