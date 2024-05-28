@@ -1,4 +1,5 @@
-import { Box, Input } from "@mui/joy";
+import { Box, Input, Button } from "@mui/joy";
+import ToggleButtonGroup from '@mui/joy/ToggleButtonGroup';
 import { useState } from "react";
 import useGetJournals from "./folders/api/journal/useGetJournals";
 import { IJournal } from "./folders/api/journals";
@@ -9,14 +10,32 @@ import NoJournals from "./folders/components/journal/NoJournals";
 
 function App() {
   const [searchedJournal, setSearchedJournal] = useState<string>("");
+  const [sortMode, setSortMode] = useState("ascending");
 
   const { data: journals } = useGetJournals();
-
   const isJournals = journals?.length > 0;
 
-  const filteredJournals = journals?.filter((journal: IJournal) =>
+
+  const sortAscending = (journalA : IJournal, journalB : IJournal) => {
+    const aTime = Number(new Date(journalA.timestamp).getTime())
+    const bTime = Number(new Date(journalB.timestamp).getTime())
+    return aTime - bTime 
+    }
+
+  const sortDescending = (journalA : IJournal, journalB : IJournal) => {
+    const aTime = Number(new Date(journalA.timestamp).getTime())
+    const bTime = Number(new Date(journalB.timestamp).getTime())
+    return  bTime - aTime 
+  }
+
+  const sortFunction = sortMode === "ascending" ? sortAscending: sortDescending
+
+ 
+  const sortedJournals = journals?.length ? [...journals]?.sort(sortFunction): [] 
+
+  const filteredJournals = sortedJournals?.filter((journal: IJournal) =>
     journal.text.toLowerCase().includes(searchedJournal.toLowerCase())
-  );
+    );
 
   return (
     <div className="relative max-h-screen h-screen bg-stone-100 overflow-hidden items-center flex flex-col">
@@ -30,6 +49,13 @@ function App() {
           <Text h={3}>Journify</Text>
         </div>
 
+        <ToggleButtonGroup 
+        value={sortMode}
+        onChange={(_,value) => value && setSortMode(value)}>
+        <Button value="ascending">Sort By Ascending</Button> 
+        <Button value="descending">Sort By Descending</Button> 
+        </ToggleButtonGroup>
+        
         {isJournals && (
           <Input
             placeholder="Search"
