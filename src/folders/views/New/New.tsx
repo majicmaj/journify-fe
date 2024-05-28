@@ -49,14 +49,23 @@ function New() {
           <SaveAsRounded />
         </IconButton>
       </div>
-      <Card sx={{ height: "100%", p: 1, px: 0 }}>
-        <div className="h-full bg-white">
-          <BlockNoteView
-            editor={editor}
-            theme="light"
-            onChange={() => setJournal(editor.document)}
-          />
-        </div>
+      <Card
+        sx={{
+          height: "100%",
+          p: 0,
+          overflow: "hidden",
+          ["* > .bn-editor"]: {
+            height: "100%",
+            border: "red",
+          },
+        }}
+      >
+        <BlockNoteView
+          editor={editor}
+          theme="light"
+          onChange={() => setJournal(editor.document)}
+          style={{ height: "100%" }}
+        />
       </Card>
     </div>
   );
