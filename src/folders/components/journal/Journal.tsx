@@ -9,6 +9,7 @@ import { IJournal } from "../../api/journals";
 import useKeyboardSave from "../../hooks/useKeyboardSave";
 import Text from "../display/Text";
 import JournalMenu from "./JournalMenu";
+import { useColorScheme } from '@mui/joy/styles';
 
 const Journal = ({ journal }: { journal: IJournal }) => {
   const { mutate: remove } = useDeleteJournal();
@@ -17,6 +18,11 @@ const Journal = ({ journal }: { journal: IJournal }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(JSON.parse(journal.text));
 
+  const { mode } = useColorScheme();
+
+  const themeClass = mode === "system" ? "light" : mode ;
+
+ 
   const handleEdit = () => {
     setIsEditing(!isEditing);
   };
@@ -43,16 +49,17 @@ const Journal = ({ journal }: { journal: IJournal }) => {
 
   return (
     <Card
-      sx={{ background: "white", p: 1 }}
+      sx={{ p: 1 }}
       color={isEditing ? "primary" : "neutral"}
     >
       <div
         key={journal.timestamp}
-        className="flex flex-col gap-2 overflow-hidden"
+        className="flex flex-col gap-2 overflow-hidden rounded-xl"
       >
         <Box
+        className="transition-all duration-300"
           sx={{
-            ml: isEditing ? -1 : -6,
+            ml: isEditing ? 0 : -5,
           }}
         >
           <BlockNoteView
@@ -62,7 +69,7 @@ const Journal = ({ journal }: { journal: IJournal }) => {
             }}
             editable={isEditing}
             sideMenu={isEditing}
-            theme="light"
+            theme={themeClass}
           />
         </Box>
       </div>

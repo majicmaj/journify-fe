@@ -7,6 +7,10 @@ import Text from "./folders/components/display/Text";
 import Journal from "./folders/components/journal/Journal";
 import NewEntryButton from "./folders/components/journal/NewEntryButton";
 import NoJournals from "./folders/components/journal/NoJournals";
+import { useColorScheme } from '@mui/joy/styles';
+import NightsStaySharpIcon from '@mui/icons-material/NightsStaySharp';
+import LightModeIcon from '@mui/icons-material/LightMode';
+
 
 function App() {
   const [searchedJournal, setSearchedJournal] = useState<string>("");
@@ -42,17 +46,36 @@ function App() {
     setSortMode(sortMode === "ascending" ? "descending" : "ascending");
   };
 
+  const toggleIcon = () => {
+    return mode === "light" ? <NightsStaySharpIcon/> : <LightModeIcon/> ;
+  }
+
+  // const [mode, setMode] = useState("dark");
+  const { mode, setMode } = useColorScheme();
+  const themeClass = mode === "dark" ? "dark" : "";
+  const toggleTheme = () => setMode(mode === "dark" ? "light" : "dark");
+
   return (
-    <div className="relative max-h-screen h-screen bg-stone-100 overflow-hidden items-center flex flex-col">
+    <div className={themeClass}>
+    <div className="relative max-h-screen h-screen bg-stone-100 dark:bg-stone-900 overflow-hidden items-center flex flex-col">
       <div className="p-2 flex flex-col gap-2 h-full overflow-y-scroll w-full">
-        <div className="pt-4 pb-8 flex items-center gap-1">
+        <div className="pt-4 pb-8 flex items-center gap-2 justify-between">
+        <div className="flex items-center gap-1">
           <img
             src="/journify_256.png"
             alt="Journify Logo"
             className="h-[32px] inline"
           />
-          <Text h={3}>Journify</Text>
+          
+          <Text h={3} className="dark:text-white">Journify</Text>
+          
+        
         </div>
+
+          <IconButton onClick={toggleTheme} className="cursor-pointer ">
+          {toggleIcon()}
+          </IconButton>
+          </div>
 
         {isJournals && (
           <div className="flex gap-2">
@@ -83,6 +106,7 @@ function App() {
       <Box className="fixed bottom-0 p-2 pb-8">
         <NewEntryButton fullButton={!isJournals} />
       </Box>
+    </div>
     </div>
   );
 }
