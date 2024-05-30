@@ -9,6 +9,7 @@ interface IText {
   size?: TSize;
   title?: boolean;
   sx?: React.CSSProperties;
+  className?: string;
 }
 
 const getLevel = (h: THeading, size: string, title: boolean) => {
@@ -16,11 +17,11 @@ const getLevel = (h: THeading, size: string, title: boolean) => {
   return (title ? "title-" : "body-") + size; // title-sm, title-md, title-lg, body-sm, body-md, body-lg
 };
 
-const Text = ({ children, size = "md", title = false, h, sx }: IText) => {
+const Text = ({ children, size = "md", title = false, h, sx, className }: IText) => {
   const level = getLevel(h, size, title) as TLevel;
 
   return (
-    <Typography level={level} sx={sx}>
+    <Typography level={level} sx={sx} className={className}>
       {children}
     </Typography>
   );
