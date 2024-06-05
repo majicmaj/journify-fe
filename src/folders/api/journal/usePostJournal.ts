@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IJournal, postJournal } from "../journals";
+import { IJournal, postJournal } from "./journals";
 
 const usePostJournal = () => {
   const queryClient = useQueryClient();

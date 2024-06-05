@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getJournals } from "../journals";
+import { getJournals } from "./journals";
 
 const useGetJournals = () => {
   const query = useQuery({

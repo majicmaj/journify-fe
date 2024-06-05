@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteJournal } from "../journals";
+import { deleteJournal } from "./journals";
 
 const useDeleteJournal = () => {
   const queryClient = useQueryClient();
