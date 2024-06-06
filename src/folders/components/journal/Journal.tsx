@@ -1,7 +1,23 @@
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
-import { EditRounded, SaveRounded } from "@mui/icons-material";
-import { Box, Card, Divider, IconButton } from "@mui/joy";
+import {
+  EditRounded,
+  SaveRounded,
+  ShareRounded,
+  ContentCopyRounded,
+} from "@mui/icons-material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Divider,
+  IconButton,
+  Modal,
+  ModalClose,
+  ModalDialog,
+  DialogTitle,
+  Stack,
+} from "@mui/joy";
 import { useColorScheme } from "@mui/joy/styles";
 import { useState } from "react";
 import { IJournal } from "../../api/journal/journals";
@@ -15,6 +31,7 @@ const Journal = ({ journal }: { journal: IJournal }) => {
   const { mutate: remove } = useDeleteJournal();
   const { mutate: update } = usePutJournal();
 
+  const [isSharing, setIsSharing] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(JSON.parse(journal.text));
 
@@ -38,6 +55,14 @@ const Journal = ({ journal }: { journal: IJournal }) => {
 
   const handleRemove = () => {
     remove(journal.timestamp);
+  };
+
+  const copyClipboard = () => {
+    if ("clipboard" in navigator) {
+      return navigator.clipboard.writeText(journal.text);
+    } else {
+      return document.execCommand("copy", true, journal.text);
+    }
   };
 
   useKeyboardSave(handlePut, [editedText]);
@@ -86,6 +111,31 @@ const Journal = ({ journal }: { journal: IJournal }) => {
               <EditRounded />
             </IconButton>
           )}
+          {isSharing && (
+            <Modal open={isSharing} onClose={() => setIsSharing(false)}>
+              <ModalDialog>
+                <DialogTitle>Share</DialogTitle>
+                <ModalClose />
+                <Stack direction="row" justifyContent="end">
+                  <IconButton onClick={copyClipboard}>
+                    <ContentCopyRounded />
+                  </IconButton>
+                </Stack>
+                <Card>
+                  <CardContent>
+                    <div>
+                      <pre className="block py-10 px-30 overflow-scroll">
+                        {JSON.stringify(journal.text, null, 2)}
+                      </pre>
+                    </div>
+                  </CardContent>
+                </Card>
+              </ModalDialog>
+            </Modal>
+          )}
+          <IconButton onClick={() => setIsSharing(true)}>
+            <ShareRounded />
+          </IconButton>
           <JournalMenu handleRemove={handleRemove} />
         </Box>
       </Box>
