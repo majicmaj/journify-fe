@@ -135,11 +135,15 @@ const Journal = ({ journal }: { journal: IJournal }) => {
                                         </IconButton>
 
                                     </Stack>
-                                            <Textarea
-                                                size="lg"
-                                                value={journal.text}
-                                                ref={textAreaRef}
-                                            />
+                                    <Card>
+                                      <CardContent >
+                                    <div>
+                                      <pre className="block py-10 px-30 overflow-scroll">
+                                        {JSON.stringify(journal.text, null, 2)}
+                                      </pre>
+                                    </div>
+                                      </CardContent>
+                                    </Card>
                                 </ModalDialog>
                             </Modal>
                         )
