@@ -1,9 +1,9 @@
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
 import { EditRounded, SaveRounded, ShareRounded, ContentCopyRounded } from "@mui/icons-material";
-import { Box, Card, CardContent, Textarea, Divider, IconButton, Modal, ModalClose, ModalDialog, DialogTitle, DialogContent, Stack, FormControl, FormLabel, Input, Button } from "@mui/joy";
+import { Box, Card, CardContent, Divider, IconButton, Modal, ModalClose, ModalDialog, DialogTitle, Stack } from "@mui/joy";
 import { useColorScheme } from "@mui/joy/styles";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { IJournal } from "../../api/journal/journals";
 import useDeleteJournal from "../../api/journal/useDeleteJournal";
 import usePutJournal from "../../api/journal/usePutJournal";
@@ -15,7 +15,6 @@ const Journal = ({ journal }: { journal: IJournal }) => {
     const { mutate: remove } = useDeleteJournal();
     const { mutate: update } = usePutJournal();
 
-    const textAreaRef = useRef(null);
 
     const [isSharing, setIsSharing] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -43,36 +42,14 @@ const Journal = ({ journal }: { journal: IJournal }) => {
         remove(journal.timestamp);
     };
 
-    const copyClipboard = (event) => {
-        // TODO: add copy to clipboard and open a modal to show the text in json
-  if ('clipboard' in navigator) {
-    return navigator.clipboard.writeText(journal.text);
-  } else {
-    return document.execCommand('copy', true, journal.text);
-  }
+    const copyClipboard = () => {
+        if ('clipboard' in navigator) {
+            return navigator.clipboard.writeText(journal.text);
+        } else {
+            return document.execCommand('copy', true, journal.text);
+        }
     }
 
-    const syntaxHighlight = (json) => {
-        if (typeof json != 'string') {
-            json = JSON.stringify(json, undefined, 2);
-        }
-        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
-            var cls = 'number';
-            if (/^"/.test(match)) {
-                if (/:$/.test(match)) {
-                    cls = 'key';
-                } else {
-                    cls = 'string';
-                }
-            } else if (/true|false/.test(match)) {
-                cls = 'boolean';
-            } else if (/null/.test(match)) {
-                cls = 'null';
-            }
-            return '<span class="' + cls + '">' + match + '</span>';
-        });
-    }
 
     useKeyboardSave(handlePut, [editedText]);
 
@@ -123,6 +100,7 @@ const Journal = ({ journal }: { journal: IJournal }) => {
                     {
                         isSharing && (
                             <Modal open={isSharing} onClose={() => setIsSharing(false)}>
+                                <ModalClose />
                                 <ModalDialog>
                                     <DialogTitle>
                                         Share
@@ -136,13 +114,13 @@ const Journal = ({ journal }: { journal: IJournal }) => {
 
                                     </Stack>
                                     <Card>
-                                      <CardContent >
-                                    <div>
-                                      <pre className="block py-10 px-30 overflow-scroll">
-                                        {JSON.stringify(journal.text, null, 2)}
-                                      </pre>
-                                    </div>
-                                      </CardContent>
+                                        <CardContent >
+                                            <div>
+                                                <pre className="block py-10 px-30 overflow-scroll">
+                                                    {JSON.stringify(journal.text, null, 2)}
+                                                </pre>
+                                            </div>
+                                        </CardContent>
                                     </Card>
                                 </ModalDialog>
                             </Modal>
