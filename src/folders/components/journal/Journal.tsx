@@ -113,9 +113,9 @@ const Journal = ({ journal }: { journal: IJournal }) => {
           )}
           {isSharing && (
             <Modal open={isSharing} onClose={() => setIsSharing(false)}>
-              <ModalClose />
               <ModalDialog>
                 <DialogTitle>Share</DialogTitle>
+                <ModalClose />
                 <Stack direction="row" justifyContent="end">
                   <IconButton onClick={copyClipboard}>
                     <ContentCopyRounded />
