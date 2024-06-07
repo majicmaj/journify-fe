@@ -59,9 +59,9 @@ const Journal = ({ journal }: { journal: IJournal }) => {
 
   const copyClipboard = () => {
     if ("clipboard" in navigator) {
-      return navigator.clipboard.writeText(journal.text);
+      return navigator.clipboard.writeText(JSON.stringify(journal));
     } else {
-      return document.execCommand("copy", true, journal.text);
+      return document.execCommand("copy", true, JSON.stringify(journal));
     }
   };
 
@@ -125,7 +125,7 @@ const Journal = ({ journal }: { journal: IJournal }) => {
                   <CardContent>
                     <div>
                       <pre className="block py-10 px-30 overflow-scroll">
-                        {JSON.stringify(journal.text, null, 2)}
+                        {JSON.stringify(journal, null, 2)}
                       </pre>
                     </div>
                   </CardContent>
