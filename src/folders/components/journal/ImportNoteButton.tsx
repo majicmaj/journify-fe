@@ -24,6 +24,7 @@ const ImportNoteButton = ({
         variant="solid"
         sx={{
           width: "calc(50vw - 1rem)",
+          margin: "0 2px",
         }}
       >
         Import
