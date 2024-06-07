@@ -9,6 +9,8 @@ import useGetJournals from "./folders/api/journal/useGetJournals";
 import Text from "./folders/components/display/Text";
 import Journal from "./folders/components/journal/Journal";
 import NewEntryButton from "./folders/components/journal/NewEntryButton";
+import ImportNoteButton from "./folders/components/journal/ImportNoteButton";
+import ImportNoteModal from "./folders/components/journal/ImportNoteModal";
 import NoJournals from "./folders/components/journal/NoJournals";
 
 function App() {
@@ -38,7 +40,7 @@ function App() {
     : [];
 
   const filteredJournals = sortedJournals?.filter((journal: IJournal) =>
-    journal.text.toLowerCase().includes(searchedJournal.toLowerCase())
+    journal.text.toLowerCase().includes(searchedJournal.toLowerCase()),
   );
 
   const toggleSortMode = () => {
@@ -48,6 +50,8 @@ function App() {
   const toggleIcon = () => {
     return mode === "light" ? <NightsStaySharpIcon /> : <LightModeIcon />;
   };
+
+  const [isImportOpen, setIsImportOpen] = useState(false);
 
   // const [mode, setMode] = useState("dark");
   const { mode, setMode } = useColorScheme();
@@ -100,9 +104,20 @@ function App() {
             ))}
 
           {!isJournals && <NoJournals />}
+          {isImportOpen && (
+            <ImportNoteModal
+              isImportOpenModal={isImportOpen}
+              setIsImportOpenModal={setIsImportOpen}
+            />
+          )}
         </div>
 
         <Box className="fixed bottom-0 p-2 pb-8">
+          <ImportNoteButton
+            fullButton={!isJournals}
+            isImportOpenModal={isImportOpen}
+            setIsImportOpenModal={setIsImportOpen}
+          />
           <NewEntryButton fullButton={!isJournals} />
         </Box>
       </div>
