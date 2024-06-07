@@ -19,7 +19,8 @@ const ImportNoteModal = ({ isImportOpenModal, setIsImportOpenModal }: IImportNot
         // Don't convert to JSON because the filteredJounals use
         // string.toLowerCase to make the filter
         const text = textAreaRef.current?.value;
-        post({text, timestamp: getTimestamp()});
+        const json = JSON.parse(text);
+        post(json);
         setIsImportOpenModal(false)
     }
 
