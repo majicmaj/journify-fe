@@ -1,43 +1,43 @@
 {
-  "name": "jook-fe",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "tsc && vite build",
-    "lint": "biome lint ./src/*",
-    "lint:write": "biome lint ./src/* --write",
-    "format": "biome format ./src/*",
-    "format:write": "biome format ./src/* --write",
-    "check": "biome check ./src/*",
-    "check:write": "biome check ./src/* --write",
-    "preview": "vite preview",
-    "start": "vite --host"
-  },
-  "dependencies": {
-    "@blocknote/core": "^0.13.4",
-    "@blocknote/mantine": "^0.13.4",
-    "@blocknote/react": "^0.13.4",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^5.15.18",
-    "@mui/joy": "^5.0.0-beta.36",
-    "@tanstack/react-query": "^5.39.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.1"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.8.0",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "autoprefixer": "^10.4.19",
-    "lefthook": "^1.6.15",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
-  }
+	"name": "jook-fe",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite --host",
+		"build": "tsc && vite build",
+		"lint": "biome lint ./src/*",
+		"lint:write": "biome lint ./src/* --write",
+		"format": "biome format ./src/*",
+		"format:write": "biome format ./src/* --write",
+		"check": "biome check ./src/*",
+		"check:write": "biome check ./src/* --write",
+		"preview": "vite preview",
+		"start": "vite --host"
+	},
+	"dependencies": {
+		"@blocknote/core": "^0.13.4",
+		"@blocknote/mantine": "^0.13.4",
+		"@blocknote/react": "^0.13.4",
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.5",
+		"@mui/icons-material": "^5.15.18",
+		"@mui/joy": "^5.0.0-beta.36",
+		"@tanstack/react-query": "^5.39.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.23.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.0",
+		"@types/react": "^18.2.66",
+		"@types/react-dom": "^18.2.22",
+		"@vitejs/plugin-react-swc": "^3.5.0",
+		"autoprefixer": "^10.4.19",
+		"lefthook": "^1.6.15",
+		"postcss": "^8.4.38",
+		"tailwindcss": "^3.4.3",
+		"typescript": "^5.2.2",
+		"vite": "^5.2.0"
+	}
 }

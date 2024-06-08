@@ -7,10 +7,10 @@ import { useState } from "react";
 import { IJournal } from "./folders/api/journal/journals";
 import useGetJournals from "./folders/api/journal/useGetJournals";
 import Text from "./folders/components/display/Text";
-import Journal from "./folders/components/journal/Journal";
-import NewEntryButton from "./folders/components/journal/NewEntryButton";
 import ImportNoteButton from "./folders/components/journal/ImportNoteButton";
 import ImportNoteModal from "./folders/components/journal/ImportNoteModal";
+import Journal from "./folders/components/journal/Journal";
+import NewEntryButton from "./folders/components/journal/NewEntryButton";
 import NoJournals from "./folders/components/journal/NoJournals";
 
 function App() {

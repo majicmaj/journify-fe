@@ -3,12 +3,12 @@ import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
 import { ArrowBackIosRounded, SaveAsRounded } from "@mui/icons-material";
 import { Card, IconButton } from "@mui/joy";
+import { useColorScheme } from "@mui/joy/styles";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import usePostJournal from "../../api/journal/usePostJournal";
 import Text from "../../components/display/Text";
 import useKeyboardSave from "../../hooks/useKeyboardSave";
-import { useColorScheme } from "@mui/joy/styles";
 
 function New() {
 	const [journal, setJournal] = useState<Block[]>([]);

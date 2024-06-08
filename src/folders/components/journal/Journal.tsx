@@ -1,21 +1,21 @@
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
 import {
+	ContentCopyRounded,
 	EditRounded,
 	SaveRounded,
 	ShareRounded,
-	ContentCopyRounded,
 } from "@mui/icons-material";
 import {
 	Box,
 	Card,
 	CardContent,
+	DialogTitle,
 	Divider,
 	IconButton,
 	Modal,
 	ModalClose,
 	ModalDialog,
-	DialogTitle,
 	Stack,
 } from "@mui/joy";
 import { useColorScheme } from "@mui/joy/styles";

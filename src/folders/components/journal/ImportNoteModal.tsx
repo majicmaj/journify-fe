@@ -1,17 +1,17 @@
 import {
 	Box,
 	Button,
-	IconButton,
-	TextArea,
-	Modal,
-	ModalDialog,
-	ModalClose,
-	DialogTitle,
 	DialogContent,
+	DialogTitle,
+	IconButton,
+	Modal,
+	ModalClose,
+	ModalDialog,
 	Stack,
+	TextArea,
 	Textarea,
 } from "@mui/joy";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 
 import usePostJournal from "../../api/journal/usePostJournal";
 
