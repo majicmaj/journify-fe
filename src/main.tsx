@@ -9,69 +9,69 @@ import New from "./folders/views/New/New.tsx";
 import "./index.css";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/new",
-    element: <New />,
-  },
+	{
+		path: "/",
+		element: <App />,
+	},
+	{
+		path: "/new",
+		element: <New />,
+	},
 ]);
 
 const theme = extendTheme({
-  colorSchemes: {
-    light: {
-      palette: {
-        // affects all Joy components that has `color="primary"` prop.
-        primary: {
-          50: "#EAF9FA",
-          100: "#CFF1F3",
-          200: "#9AE2E6",
-          300: "#65D3D9",
-          400: "#40C8D0",
-          500: "#2DAEB5",
-          600: "#248B91",
-          700: "#1B686C",
-          800: "#124447",
-          900: "#082122",
-          // 950: "#040F10",
-        },
-      },
-    }, 
-    dark: {
-      palette: {
-        // affects all Joy components that has `color="primary"` prop.
-        primary: {
-          50: "#EAF9FA",
-          100: "#CFF1F3",
-          200: "#9AE2E6",
-          300: "#65D3D9",
-          400: "#40C8D0",
-          500: "#2DAEB5",
-          600: "#248B91",
-          700: "#1B686C",
-          800: "#124447",
-          900: "#082122",
-          // 950: "#040F10",
-        },
-      },
-    },
-  },
+	colorSchemes: {
+		light: {
+			palette: {
+				// affects all Joy components that has `color="primary"` prop.
+				primary: {
+					50: "#EAF9FA",
+					100: "#CFF1F3",
+					200: "#9AE2E6",
+					300: "#65D3D9",
+					400: "#40C8D0",
+					500: "#2DAEB5",
+					600: "#248B91",
+					700: "#1B686C",
+					800: "#124447",
+					900: "#082122",
+					// 950: "#040F10",
+				},
+			},
+		},
+		dark: {
+			palette: {
+				// affects all Joy components that has `color="primary"` prop.
+				primary: {
+					50: "#EAF9FA",
+					100: "#CFF1F3",
+					200: "#9AE2E6",
+					300: "#65D3D9",
+					400: "#40C8D0",
+					500: "#2DAEB5",
+					600: "#248B91",
+					700: "#1B686C",
+					800: "#124447",
+					900: "#082122",
+					// 950: "#040F10",
+				},
+			},
+		},
+	},
 
-  fontFamily: {
-    display: "Inter, var(--joy-fontFamily-fallback)",
-    body: "Inter, var(--joy-fontFamily-fallback)",
-  },
+	fontFamily: {
+		display: "Inter, var(--joy-fontFamily-fallback)",
+		body: "Inter, var(--joy-fontFamily-fallback)",
+	},
 });
 
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <CssVarsProvider theme={theme}>
-        <RouterProvider router={router} />
-      </CssVarsProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
+	<React.StrictMode>
+		<QueryClientProvider client={queryClient}>
+			<CssVarsProvider theme={theme}>
+				<RouterProvider router={router} />
+			</CssVarsProvider>
+		</QueryClientProvider>
+	</React.StrictMode>,
 );
