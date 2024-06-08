@@ -115,7 +115,6 @@ function App() {
         <Box className="fixed bottom-0 p-2 pb-8">
           <ImportNoteButton
             fullButton={!isJournals}
-            isImportOpenModal={isImportOpen}
             setIsImportOpenModal={setIsImportOpen}
           />
           <NewEntryButton fullButton={!isJournals} />

@@ -12,7 +12,6 @@ const ImportNoteModal = ({ isImportOpenModal, setIsImportOpenModal }: IImportNot
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
     const { mutate: post } = usePostJournal();
-  const getTimestamp = () => new Date().toLocaleString();
 
     const handleSubmit = () => {
         // TODO: add try/catch in case is not part of the format

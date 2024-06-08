@@ -11,7 +11,6 @@ interface IImportNoteButton {
 
 const ImportNoteButton = ({
   fullButton,
-  isImportOpenModal,
   setIsImportOpenModal,
 }: IImportNoteButton) => {
   if (fullButton) {
