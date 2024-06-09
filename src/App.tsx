@@ -1,6 +1,4 @@
 import { SwapVertRounded } from "@mui/icons-material";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import NightsStaySharpIcon from "@mui/icons-material/NightsStaySharp";
 import { Box, IconButton, Input } from "@mui/joy";
 import { useColorScheme } from "@mui/joy/styles";
 import { useState } from "react";
@@ -10,6 +8,7 @@ import Text from "./folders/components/display/Text";
 import ImportNoteButton from "./folders/components/journal/ImportNoteButton";
 import ImportNoteModal from "./folders/components/journal/ImportNoteModal";
 import Journal from "./folders/components/journal/Journal";
+import MainMenu from "./folders/components/journal/MainMenu";
 import NewEntryButton from "./folders/components/journal/NewEntryButton";
 import NoJournals from "./folders/components/journal/NoJournals";
 
@@ -47,16 +46,10 @@ function App() {
 		setSortMode(sortMode === "ascending" ? "descending" : "ascending");
 	};
 
-	const toggleIcon = () => {
-		return mode === "light" ? <NightsStaySharpIcon /> : <LightModeIcon />;
-	};
-
 	const [isImportOpen, setIsImportOpen] = useState(false);
 
-	// const [mode, setMode] = useState("dark");
 	const { mode, setMode } = useColorScheme();
 	const themeClass = mode === "dark" ? "dark" : "";
-	const toggleTheme = () => setMode(mode === "dark" ? "light" : "dark");
 
 	return (
 		<div className={themeClass}>
@@ -75,9 +68,11 @@ function App() {
 							</Text>
 						</div>
 
-						<IconButton onClick={toggleTheme} className="cursor-pointer ">
-							{toggleIcon()}
-						</IconButton>
+						<MainMenu
+							mode={mode}
+							setMode={setMode}
+							setIsImportOpenModal={setIsImportOpen}
+						/>
 					</div>
 
 					{isJournals && (
