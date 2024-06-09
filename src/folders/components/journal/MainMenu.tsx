@@ -30,16 +30,23 @@ const MainMenu = ({ mode, setMode, setIsImportOpenModal }: IMainMenu) => {
 			</MenuButton>
 			<Menu>
 				<MenuItem onClick={toggleTheme}>
-					<IconButton className="cursor-pointer ">{toggleIcon()}</IconButton>
+					<Button
+						startDecorator={toggleIcon()}
+						className="cursor-pointer"
+						color="neutral"
+						variant="plain"
+					>
+						{mode}
+					</Button>
 				</MenuItem>
 				<MenuItem>
 					<Button
 						onClick={() => setIsImportOpenModal(true)}
 						startDecorator={<PublishRounded />}
-						variant="solid"
-						sx={{}}
+						variant="plain"
+						color="neutral"
 					>
-						Import from JSON
+						Import
 					</Button>
 				</MenuItem>
 			</Menu>
