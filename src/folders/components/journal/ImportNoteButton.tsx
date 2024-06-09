@@ -1,11 +1,8 @@
 import { BorderColorRounded, PublishRounded } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/joy";
 
-import { useState } from "react";
-
 interface IImportNoteButton {
 	fullButton?: boolean;
-	isImportOpenModal: boolean;
 	setIsImportOpenModal: (value: boolean) => void;
 }
 

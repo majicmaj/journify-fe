@@ -1,17 +1,14 @@
 import {
-	Box,
 	Button,
 	DialogContent,
 	DialogTitle,
-	IconButton,
 	Modal,
 	ModalClose,
 	ModalDialog,
 	Stack,
-	TextArea,
 	Textarea,
 } from "@mui/joy";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import usePostJournal from "../../api/journal/usePostJournal";
 
@@ -33,6 +30,7 @@ const ImportNoteModal = ({
 		// Don't convert to JSON because the filteredJounals use
 		// string.toLowerCase to make the filter
 		const text = textAreaRef.current?.value;
+		if (!text) throw new Error("No text found");
 		const json = JSON.parse(text);
 		post(json);
 		setIsImportOpenModal(false);

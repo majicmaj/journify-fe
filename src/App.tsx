@@ -49,6 +49,7 @@ function App() {
 	const [isImportOpen, setIsImportOpen] = useState(false);
 
 	const { mode, setMode } = useColorScheme();
+	const toggleTheme = () => setMode(mode === "dark" ? "light" : "dark");
 	const themeClass = mode === "dark" ? "dark" : "";
 
 	return (
@@ -70,7 +71,7 @@ function App() {
 
 						<MainMenu
 							mode={mode}
-							setMode={setMode}
+							toggleTheme={toggleTheme}
 							setIsImportOpenModal={setIsImportOpen}
 						/>
 					</div>
