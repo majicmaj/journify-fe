@@ -5,7 +5,6 @@ import { useState } from "react";
 import { IJournal } from "./folders/api/journal/journals";
 import useGetJournals from "./folders/api/journal/useGetJournals";
 import Text from "./folders/components/display/Text";
-import ImportNoteButton from "./folders/components/journal/ImportNoteButton";
 import ImportNoteModal from "./folders/components/journal/ImportNoteModal";
 import Journal from "./folders/components/journal/Journal";
 import MainMenu from "./folders/components/journal/MainMenu";
@@ -109,10 +108,7 @@ function App() {
 				</div>
 
 				<Box className="fixed bottom-0 p-2 pb-8">
-					<ImportNoteButton
-						fullButton={!isJournals}
-						setIsImportOpenModal={setIsImportOpen}
-					/>
+					
 					<NewEntryButton fullButton={!isJournals} />
 				</Box>
 			</div>
